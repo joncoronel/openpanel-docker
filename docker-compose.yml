@@ -34,6 +34,10 @@ services:
       - REDIS_HOST=redis
     ports:
       - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.openpanel.rule=Host(`analytics.joncoronel.com`)"
+      - "traefik.http.services.openpanel.loadbalancer.server.port=3000"
     depends_on:
       - clickhouse
       - redis
