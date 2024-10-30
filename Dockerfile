@@ -19,8 +19,12 @@ RUN git clone https://github.com/Openpanel-dev/openpanel.git .
 # Copy env file template
 RUN cp .env.example .env
 
-# Install dependencies and build
-RUN cd self-hosting && pnpm install && pnpm build
+# Install dependencies
+RUN cd self-hosting && pnpm install
+
+# Install Prisma globally and generate client
+RUN npm install -g prisma
+RUN cd self-hosting && prisma generate
 
 # Expose necessary port
 EXPOSE 3000
@@ -29,5 +33,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV NODE_ENV=production
 
-# Start command (run the application directly)
-CMD ["sh", "-c", "cd self-hosting && pnpm start"]
+# Start command
+CMD ["sh", "-c", "cd self-hosting && node index.js"]
