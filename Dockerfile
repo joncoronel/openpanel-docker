@@ -28,4 +28,4 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Start using the development server for now
-CMD ["sh", "-c", "pnpm dev"]
+CMD ["sh", "-c", "pnpm start"]

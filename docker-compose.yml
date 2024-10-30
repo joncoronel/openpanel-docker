@@ -32,6 +32,8 @@ services:
       - CLICKHOUSE_HOST=clickhouse
       - CLICKHOUSE_PASSWORD=password
       - REDIS_HOST=redis
+      - PORT=3000
+      - NODE_ENV=production
     ports:
       - "3000:3000"
     labels:
