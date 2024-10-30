@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     build-essential \
+    docker.io \
+    docker-compose \
     && npm install -g pnpm
 
 # Set working directory
@@ -16,7 +18,7 @@ WORKDIR /app
 # Clone OpenPanel repository
 RUN git clone https://github.com/Openpanel-dev/openpanel.git .
 
-# Copy env file template
+# Copy env file template and rename
 RUN cp .env.example .env
 
 # Install dependencies
@@ -29,8 +31,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV NODE_ENV=production
 
-# Debug: List files and check package.json
-RUN ls -la self-hosting && cat self-hosting/package.json
-
 # Start command
-CMD ["sh", "-c", "cd self-hosting && ls -la && node server.js"]
+CMD ["sh", "-c", "cd self-hosting && cat start && sh ./start"]
