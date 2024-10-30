@@ -22,10 +22,6 @@ RUN cp .env.example .env
 # Install dependencies
 RUN cd self-hosting && pnpm install
 
-# Install Prisma globally and generate client
-RUN npm install -g prisma
-RUN cd self-hosting && prisma generate
-
 # Expose necessary port
 EXPOSE 3000
 
@@ -33,5 +29,8 @@ EXPOSE 3000
 ENV PORT=3000
 ENV NODE_ENV=production
 
+# Debug: List files and check package.json
+RUN ls -la self-hosting && cat self-hosting/package.json
+
 # Start command
-CMD ["sh", "-c", "cd self-hosting && node index.js"]
+CMD ["sh", "-c", "cd self-hosting && ls -la && node server.js"]
