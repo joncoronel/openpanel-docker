@@ -9,6 +9,14 @@ services:
       - CLERK_WEBHOOK_SECRET=${CLERK_WEBHOOK_SECRET}
       - DATABASE_URL=clickhouse://default:password@clickhouse:8123/openpanel
       - REDIS_URL=redis://redis:6379
+      - PORT=3000
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - default
+      - traefik-public
     ports:
       - "3000:3000"
     labels:
@@ -27,12 +35,21 @@ services:
       - CLICKHOUSE_PASSWORD=password
     volumes:
       - clickhouse_data:/var/lib/clickhouse
+    networks:
+      - default
 
   redis:
     image: redis:7-alpine
     command: redis-server --notify-keyspace-events Ex
     volumes:
       - redis_data:/data
+    networks:
+      - default
+
+networks:
+  default:
+  traefik-public:
+    external: true
 
 volumes:
   clickhouse_data:
