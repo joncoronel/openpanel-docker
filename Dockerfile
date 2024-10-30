@@ -14,15 +14,18 @@ WORKDIR /app
 # Clone OpenPanel repository
 RUN git clone https://github.com/Openpanel-dev/openpanel.git .
 
-# Copy env file template
-RUN cp .env.example .env
-
 # Install dependencies
-RUN cd self-hosting && pnpm install
+WORKDIR /app/self-hosting
+RUN pnpm install
 
-EXPOSE 3000
+# Debug: Show package.json content
+RUN echo "Package.json content:" && cat package.json
 
+# Set environment variables
 ENV PORT=3000
 ENV NODE_ENV=production
 
-CMD ["sh", "-c", "cd self-hosting && pnpm start"]
+EXPOSE 3000
+
+# Start using the development server for now
+CMD ["sh", "-c", "pnpm dev"]
