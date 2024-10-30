@@ -1,9 +1,14 @@
 # Use Node.js as base
 FROM node:20-slim
 
-# Install pnpm and other dependencies
-RUN apt-get update && apt-get install -y git curl && \
-    npm install -g pnpm
+# Install pnpm and other dependencies including Python
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    python3 \
+    python3-pip \
+    build-essential \
+    && npm install -g pnpm
 
 # Set working directory
 WORKDIR /app
